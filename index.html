@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- skill:chrome -->
+<style>
+/* Credit line — bottom-right */
+.design-ui-credit {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font: 11px/1 system-ui, sans-serif;
+  color: rgba(128,128,128,0.5);
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hide chrome on touch devices */
+@media (hover: none) {
+  .design-ui-credit { display: none; }
+}
+
+/* Print fixes */
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .design-ui-credit { display: none !important; }
+}
+
+</style>
+<script>
+(function () {
+    // Design-ui pages are single compositions, so the whole body is editable.
+    function markEditable() {
+        document.body.classList.add('artifact-editable');
+    }
+
+    // Credit badge with idle-fade. Hover devices only.
+    function initChromeUI() {
+        if (!matchMedia('(hover: hover)').matches) return;
+
+        var credit = document.createElement('div');
+        credit.className = 'design-ui-credit';
+        credit.setAttribute('aria-hidden', 'true');
+        credit.innerHTML = '\u{1F49C} by ClickUp Brain';
+        document.body.appendChild(credit);
+
+        var timer = null;
+        var fade = function (out) { credit.style.opacity = out ? '0' : ''; };
+        fade(true);
+        var show = function () {
+            fade(false);
+            clearTimeout(timer);
+            timer = setTimeout(function () { fade(true); }, 3000);
+        };
+        document.addEventListener('mousemove', show);
+        show();
+    }
+
+    function init() {
+        markEditable();
+        initChromeUI();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+</script>
+<!-- /skill:chrome -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Bright Buddies: A fun, safe educational YouTube channel for kids. Learn through colorful animations, songs, stories, games, and interactive lessons.">
+<title>Bright Buddies | Learning Made Fun Every Day!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sky: oklch(72% 0.12 230);
+  --sky-light: oklch(92% 0.04 230);
+  --sky-dark: oklch(55% 0.14 230);
+  --yellow: oklch(85% 0.16 85);
+  --yellow-light: oklch(95% 0.06 85);
+  --green: oklch(68% 0.15 145);
+  --green-light: oklch(92% 0.05 145);
+  --coral: oklch(72% 0.14 30);
+  --coral-light: oklch(93% 0.04 30);
+  --pink: oklch(78% 0.1 350);
+  --pink-light: oklch(94% 0.03 350);
+  --purple: oklch(65% 0.15 300);
+  --white: oklch(99% 0.005 230);
+  --off-white: oklch(97% 0.007 230);
+  --text-dark: oklch(25% 0.02 230);
+  --text-body: oklch(35% 0.015 230);
+  --text-muted: oklch(55% 0.01 230);
+  --shadow-sm: 0 2px 8px oklch(25% 0.02 230 / 0.06);
+  --shadow-md: 0 4px 20px oklch(25% 0.02 230 / 0.08);
+  --shadow-lg: 0 8px 40px oklch(25% 0.02 230 / 0.1);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-xl: 48px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-optical-sizing: auto;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-body);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Fredoka', sans-serif;
+  color: var(--text-dark);
+  text-wrap: balance;
+  line-height: 1.2;
+}
+
+p { text-wrap: pretty; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { text-decoration: none; color: inherit; }
+
+button, input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  outline: none;
+}
+
+.container {
+  width: min(90%, 1200px);
+  margin-inline: auto;
+}
+
+.section-label {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 60ch;
+}
+
+.floating-decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-15px) translateX(10px); }
+  66% { transform: translateY(-8px) translateX(-5px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.6); }
+}
+
+.star {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--yellow);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 12px 0;
+  transition: background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.nav.scrolled {
+  background: oklch(99% 0.005 230 / 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(92%, 1200px);
+  margin-inline: auto;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--sky-dark);
+}
+
+.nav-logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--sky), var(--green));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-body);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--sky);
+  border-radius: 2px;
+  transition: width 0.3s var(--ease-out);
+}
+
+.nav-links a:hover { color: var(--sky-dark); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  background: var(--coral);
+  color: var(--white) !important;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-weight: 700;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s;
+}
+
+.nav-cta::after { display: none !important; }
+.nav-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px oklch(72% 0.14 30 / 0.3);
+  color: var(--white) !important;
+}
+
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger {
+  width: 24px;
+  height: 18px;
+  position: relative;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--text-dark);
+  border-radius: 2px;
+  transition: 0.3s var(--ease-out);
+}
+
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.hamburger span:nth-child(3) { bottom: 0; }
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0 80px;
+  background: linear-gradient(180deg, var(--sky-light) 0%, var(--white) 100%);
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: min(90%, 800px);
+  margin-inline: auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--sky-dark);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.hero-badge span { font-size: 1.2rem; }
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--sky-dark), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 55ch;
+  margin-inline: auto;
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary {
+  background: var(--coral);
+  color: var(--white);
+  box-shadow: 0 4px 20px oklch(72% 0.14 30 / 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 28px oklch(72% 0.14 30 / 0.4);
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--text-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-decor {
+  position: absolute;
+  z-index: 1;
+}
+
+.hero-cloud-1 {
+  top: 15%;
+  left: -5%;
+  width: 180px;
+  height: 60px;
+  background: oklch(97% 0.005 230);
+  border-radius: 100px;
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.hero-cloud-1::before {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: inherit;
+  border-radius: 50%;
+  top: -40px;
+  left: 30px;
+}
+
+.hero-cloud-1::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: inherit;
+  border-radius: 50%;
+  top: -25px;
+  left: 90px;
+}
+
+.hero-cloud-2 {
+  top: 25%;
+  right: -3%;
+  width: 140px;
+  height: 45px;
+  background: oklch(96% 0.008 230);
+  border-radius: 100px;
+  animation: floatSlow 10s ease-in-out infinite 2s;
+}
+
+.hero-cloud-2::before {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: inherit;
+  border-radius: 50%;
+  top: -30px;
+  left: 20px;
+}
+
+.hero-cloud-2::after {
+  content: '';
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background: inherit;
+  border-radius: 50%;
+  top: -18px;
+  left: 70px;
+}
+
+.hero-star {
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.hero-star-1 { top: 20%; left: 10%; width: 12px; height: 12px; animation-delay: 0s; }
+.hero-star-2 { top: 35%; right: 12%; width: 10px; height: 10px; animation-delay: 0.7s; }
+.hero-star-3 { bottom: 30%; left: 15%; width: 8px; height: 8px; animation-delay: 1.4s; }
+.hero-star-4 { top: 15%; right: 20%; width: 14px; height: 14px; animation-delay: 0.3s; }
+
+.hero-balloon {
+  position: absolute;
+  width: 40px;
+  height: 55px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: float 5s ease-in-out infinite;
+}
+
+.hero-balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 1px;
+  height: 20px;
+  background: oklch(60% 0.02 230);
+}
+
+.balloon-1 { bottom: 20%; left: 8%; background: var(--pink); animation-delay: 0s; }
+.balloon-2 { bottom: 35%; right: 10%; background: var(--yellow); animation-delay: 1.5s; }
+.balloon-3 { top: 40%; left: 5%; background: var(--green); animation-delay: 3s; width: 30px; height: 42px; }
+
+.hero-characters {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.character {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  box-shadow: var(--shadow-md);
+  animation: float 3s ease-in-out infinite;
+}
+
+.character:nth-child(2) { animation-delay: 0.5s; }
+.character:nth-child(3) { animation-delay: 1s; }
+.character:nth-child(4) { animation-delay: 1.5s; }
+.character:nth-child(5) { animation-delay: 2s; }
+
+/* About Section */
+.about {
+  padding: 100px 0;
+  position: relative;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.about-visual {
+  position: relative;
+  height: 400px;
+  background: linear-gradient(135deg, var(--sky-light), var(--green-light));
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.about-visual-inner {
+  font-size: 6rem;
+  text-align: center;
+  line-height: 1.4;
+  animation: float 4s ease-in-out infinite;
+}
+
+.about-content h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+/* Why Choose Us */
+.why-us {
+  padding: 100px 0;
+  background: var(--off-white);
+  position: relative;
+}
+
+.why-us-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.why-card {
+  background: var(--white);
+  padding: 36px 28px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.why-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.why-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+}
+
+.why-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.why-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Categories */
+.categories {
+  padding: 100px 0;
+  position: relative;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.category-card {
+  background: var(--white);
+  padding: 32px 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.category-icon {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.category-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Featured Videos */
+.videos {
+  padding: 100px 0;
+  background: linear-gradient(180deg, var(--yellow-light) 0%, var(--white) 100%);
+}
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  margin-top: 48px;
+}
+
+.video-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.video-thumb {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.video-play {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  background: oklch(99% 0.005 230 / 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s;
+}
+
+.video-card:hover .video-play {
+  transform: scale(1.1);
+}
+
+.video-play::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 14px solid var(--coral);
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  margin-left: 3px;
+}
+
+.video-info {
+  padding: 20px;
+}
+
+.video-info h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.video-info p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Benefits */
+.benefits {
+  padding: 100px 0;
+}
+
+.benefits-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.benefit-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+}
+
+.benefit-item:hover {
+  background: var(--off-white);
+}
+
+.benefit-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.benefit-text h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.benefit-text p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.benefits-visual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.benefit-visual-card {
+  padding: 28px 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.benefit-visual-card:nth-child(2) { transform: translateY(20px); }
+.benefit-visual-card:nth-child(3) { transform: translateY(-10px); }
+
+/* For Parents */
+.parents {
+  padding: 100px 0;
+  background: var(--green-light);
+  position: relative;
+}
+
+.parents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.parent-card {
+  background: var(--white);
+  padding: 32px 24px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.parent-card:hover { transform: translateY(-3px); }
+
+.parent-card-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.parent-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.parent-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Testimonials */
+.testimonials {
+  padding: 100px 0;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.testimonial-card {
+  background: var(--white);
+  padding: 32px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.testimonial-card:hover { transform: translateY(-3px); }
+
+.testimonial-stars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-body);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.testimonial-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+}
+
+.testimonial-role {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* FAQ */
+.faq {
+  padding: 100px 0;
+  background: var(--pink-light);
+}
+
+.faq-list {
+  max-width: 700px;
+  margin: 48px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: none;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-dark);
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.faq-question:hover { background: var(--off-white); }
+
+.faq-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sky-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--sky-dark);
+  transition: transform 0.3s var(--ease-out);
+  flex-shrink: 0;
+}
+
+.faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease-out), padding 0.3s;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 300px;
+}
+
+.faq-answer-inner {
+  padding: 0 24px 20px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Newsletter */
+.newsletter {
+  padding: 80px 0;
+  position: relative;
+}
+
+.newsletter-box {
+  background: linear-gradient(135deg, var(--sky), var(--purple));
+  border-radius: var(--radius-lg);
+  padding: 64px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-box h2 {
+  color: var(--white);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 12px;
+}
+
+.newsletter-box p {
+  color: oklch(95% 0.01 230);
+  margin-bottom: 32px;
+  font-size: 1.05rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  max-width: 450px;
+  margin-inline: auto;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 16px 24px;
+  border-radius: 100px;
+  background: oklch(99% 0.005 230 / 0.95);
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+.newsletter-input::placeholder { color: var(--text-muted); }
+
+.newsletter-btn {
+  padding: 16px 32px;
+  background: var(--yellow);
+  color: var(--text-dark);
+  border-radius: 100px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+
+.newsletter-btn:hover { transform: scale(1.05); }
+
+/* Contact */
+.contact {
+  padding: 100px 0;
+  background: var(--off-white);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 48px;
+}
+
+.contact-info h3 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+
+.contact-info p {
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.contact-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-link {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.social-link:hover { transform: scale(1.1) translateY(-2px); }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-input, .form-textarea {
+  padding: 16px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  border: 2px solid oklch(90% 0.01 230);
+  transition: border-color 0.2s;
+  font-size: 1rem;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--sky);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-btn {
+  align-self: flex-start;
+  padding: 16px 40px;
+  background: var(--sky);
+  color: var(--white);
+  border-radius: 100px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s;
+}
+
+.form-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px oklch(72% 0.12 230 / 0.3);
+}
+
+/* Footer */
+.footer {
+  padding: 48px 0 24px;
+  background: var(--text-dark);
+  color: oklch(80% 0.01 230);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: 1px solid oklch(35% 0.015 230);
+  margin-bottom: 24px;
+}
+
+.footer-logo {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 0.9rem;
+  color: oklch(70% 0.01 230);
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--white); }
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.85rem;
+  color: oklch(55% 0.01 230);
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: 24px;
+    gap: 20px;
+    box-shadow: var(--shadow-lg);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+
+  .about-grid,
+  .benefits-layout,
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero-characters { gap: 12px; }
+  .character { width: 60px; height: 60px; font-size: 1.6rem; }
+
+  .categories-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hero-balloon, .hero-cloud-1, .hero-cloud-2 { opacity: 0.4; }
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 2rem; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .btn { width: 100%; justify-content: center; }
+  .videos-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .benefits-visual { display: none; }
+}
+
+.rainbow-line {
+  height: 4px;
+  background: linear-gradient(90deg, var(--coral), var(--yellow), var(--green), var(--sky), var(--purple), var(--pink));
+  border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="rainbow-line"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">📚</div>
+      Bright Buddies
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#categories">Learn</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#parents">Parents</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="https://www.youtube.com/@Bright_buddies-e6k" class="nav-cta">Watch Now ▶</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+      <div class="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-decor hero-cloud-1"></div>
+  <div class="hero-decor hero-cloud-2"></div>
+  <div class="hero-decor hero-balloon balloon-1"></div>
+  <div class="hero-decor hero-balloon balloon-2"></div>
+  <div class="hero-decor hero-balloon balloon-3"></div>
+  <div class="hero-decor star hero-star hero-star-1" style="background:var(--yellow)"></div>
+  <div class="hero-decor star hero-star hero-star-2" style="background:var(--pink)"></div>
+  <div class="hero-decor star hero-star hero-star-3" style="background:var(--green)"></div>
+  <div class="hero-decor star hero-star hero-star-4" style="background:var(--yellow)"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge"><span>🌟</span> A Safe & Fun Learning Adventure</div>
+    <h1>Learning Made Fun Every Day!</h1>
+    <p class="hero-subtitle">We help children learn while having fun in a safe, positive, and engaging environment. Colorful animations, catchy songs, creative stories, and interactive games designed to spark curiosity and build confidence.</p>
+    <div class="hero-buttons">
+      <a href="https://www.youtube.com/@Bright_buddies-e6k" class="btn btn-primary">▶ Watch on YouTube</a>
+      <a href="#about" class="btn btn-secondary">Learn More ↓</a>
+    </div>
+    <div class="hero-characters">
+      <div class="character" style="background:var(--yellow-light)">🦁</div>
+      <div class="character" style="background:var(--sky-light)">🐰</div>
+      <div class="character" style="background:var(--green-light)">🐸</div>
+      <div class="character" style="background:var(--pink-light)">🦋</div>
+      <div class="character" style="background:var(--coral-light)">🐻</div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-visual-inner">📖✨🎨<br>🎵🌈🎓</div>
+      </div>
+      <div class="about-content reveal reveal-delay-1">
+        <span class="section-label" style="background:var(--sky-light);color:var(--sky-dark)">About Us</span>
+        <h2>A Trusted Space Where Kids Love to Learn</h2>
+        <p>We believe every child deserves access to high-quality, entertaining education. Our channel combines colorful animations, upbeat songs, captivating stories, and creative activities to turn learning into an adventure.</p>
+        <p>Created by educators and parents who understand how children learn best, every video is designed to nurture curiosity, build confidence, and make knowledge stick through play and repetition.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-us" id="why">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--yellow-light);color:oklch(50% 0.12 85)">Why Us</span>
+      <h2 class="section-title">Why Families Choose Our Channel</h2>
+      <p class="section-subtitle" style="margin-inline:auto">Thousands of parents trust us to deliver content that's both entertaining and educational.</p>
+    </div>
+    <div class="why-us-grid">
+      <div class="why-card reveal">
+        <div class="why-card-icon" style="background:var(--green-light)">🛡️</div>
+        <h3>100% Safe & Family-Friendly</h3>
+        <p>No ads, no inappropriate content. Every video is carefully reviewed to ensure a safe viewing experience for young minds.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-card-icon" style="background:var(--sky-light)">🎓</div>
+        <h3>Real Educational Value</h3>
+        <p>Developed with early childhood educators to align with learning milestones and curriculum standards.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-card-icon" style="background:var(--coral-light)">🎬</div>
+        <h3>Engaging Animations</h3>
+        <p>Bright colors, lovable characters, and dynamic visuals that hold attention and make concepts memorable.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-card-icon" style="background:var(--pink-light)">👨‍🏫</div>
+        <h3>Experienced Creators</h3>
+        <p>Our team includes teachers, animators, and child psychologists dedicated to quality content creation.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-card-icon" style="background:var(--yellow-light)">🎉</div>
+        <h3>Fun Learning Experiences</h3>
+        <p>Games, quizzes, sing-alongs, and interactive challenges that make children excited to learn more every day.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-card-icon" style="background:var(--green-light)">🌍</div>
+        <h3>Diverse & Inclusive</h3>
+        <p>Content that celebrates different cultures, languages, and perspectives to help children understand the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Learning Categories -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--green-light);color:var(--green)">Explore</span>
+      <h2 class="section-title">Learning Categories</h2>
+      <p class="section-subtitle" style="margin-inline:auto">Tap into a world of topics designed for curious little minds.</p>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card reveal" style="border-bottom:3px solid var(--coral)">
+        <span class="category-icon">🔤</span>
+        <h3>Alphabet & Phonics</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-1" style="border-bottom:3px solid var(--sky)">
+        <span class="category-icon">🔢</span>
+        <h3>Numbers & Math</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-1" style="border-bottom:3px solid var(--yellow)">
+        <span class="category-icon">🎨</span>
+        <h3>Colors & Shapes</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-2" style="border-bottom:3px solid var(--green)">
+        <span class="category-icon">🦁</span>
+        <h3>Animals & Nature</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-2" style="border-bottom:3px solid var(--purple)">
+        <span class="category-icon">🔬</span>
+        <h3>Science</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-3" style="border-bottom:3px solid var(--pink)">
+        <span class="category-icon">📚</span>
+        <h3>Reading</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-3" style="border-bottom:3px solid var(--coral)">
+        <span class="category-icon">✂️</span>
+        <h3>Arts & Crafts</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-3" style="border-bottom:3px solid var(--sky)">
+        <span class="category-icon">🎵</span>
+        <h3>Music & Songs</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-4" style="border-bottom:3px solid var(--yellow)">
+        <span class="category-icon">🤝</span>
+        <h3>Good Manners</h3>
+      </div>
+      <div class="category-card reveal reveal-delay-4" style="border-bottom:3px solid var(--green)">
+        <span class="category-icon">🧩</span>
+        <h3>Problem Solving</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Videos -->
+<section class="videos" id="videos">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--coral-light);color:var(--coral)">Popular</span>
+      <h2 class="section-title">Featured Videos</h2>
+      <p class="section-subtitle" style="margin-inline:auto">Our most loved videos that kids watch again and again.</p>
+    </div>
+    <div class="videos-grid">
+      <a href="https://www.youtube.com/@Bright_buddies-e6k" class="video-card reveal">
+        <div class="video-thumb" style="background:linear-gradient(135deg,var(--sky-light),var(--green-light))">
+          <span>🔤🎶</span>
+          <div class="video-play"></div>
+        </div>
+        <div class="video-info">
+          <h3>ABC Song: Learn the Alphabet!</h3>
+          <p>A catchy tune that helps kids memorize letters through rhythm, repetition, and colorful animations.</p>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/@Bright_buddies-e6k" class="video-card reveal reveal-delay-1">
+        <div class="video-thumb" style="background:linear-gradient(135deg,var(--yellow-light),var(--coral-light))">
+          <span>🔢✨</span>
+          <div class="video-play"></div>
+        </div>
+        <div class="video-info">
+          <h3>Count to 100 with Animals</h3>
+          <p>Join friendly animals on a counting adventure that builds number confidence from 1 all the way to 100.</p>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/@Bright_buddies-e6k" class="video-card reveal reveal-delay-2">
+        <div class="video-thumb" style="background:linear-gradient(135deg,var(--pink-light),var(--purple) / 0.2)">
+          <span>🌈🎨</span>
+          <div class="video-play"></div>
+        </div>
+        <div class="video-info">
+          <h3>Rainbow Colors Adventure</h3>
+          <p>Explore every color of the rainbow through fun experiments, crafts, and a sing-along that sticks.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits for Kids -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--pink-light);color:oklch(55% 0.12 350)">Growth</span>
+      <h2 class="section-title">How Kids Benefit</h2>
+      <p class="section-subtitle" style="margin-inline:auto">Every video is a step toward building essential life skills.</p>
+    </div>
+    <div class="benefits-layout">
+      <div class="benefits-list reveal">
+        <div class="benefit-item">
+          <div class="benefit-icon" style="background:var(--yellow-light)">💡</div>
+          <div class="benefit-text">
+            <h4>Sparks Creativity</h4>
+            <p>Open-ended activities encourage imaginative thinking and artistic expression.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" style="background:var(--sky-light)">📖</div>
+          <div class="benefit-text">
+            <h4>Builds Vocabulary</h4>
+            <p>New words introduced through context, repetition, and engaging storylines.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" style="background:var(--green-light)">🗣️</div>
+          <div class="benefit-text">
+            <h4>Improves Communication</h4>
+            <p>Songs and stories model clear pronunciation and conversational skills.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" style="background:var(--coral-light)">🧠</div>
+          <div class="benefit-text">
+            <h4>Strengthens Memory</h4>
+            <p>Repetition and musical patterns help concepts stick in young minds.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" style="background:var(--pink-light)">⭐</div>
+          <div class="benefit-text">
+            <h4>Boosts Confidence</h4>
+            <p>Achievable challenges and positive reinforcement build self-esteem.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" style="background:var(--yellow-light)">🔍</div>
+          <div class="benefit-text">
+            <h4>Develops Critical Thinking</h4>
+            <p>Puzzles and problem-solving activities encourage logical reasoning.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" style="background:var(--sky-light)">🚀</div>
+          <div class="benefit-text">
+            <h4>Fuels Curiosity</h4>
+            <p>Each video ends with questions that inspire children to explore further.</p>
+          </div>
+        </div>
+      </div>
+      <div class="benefits-visual reveal reveal-delay-2">
+        <div class="benefit-visual-card" style="background:var(--sky-light)">🎨</div>
+        <div class="benefit-visual-card" style="background:var(--yellow-light)">🧩</div>
+        <div class="benefit-visual-card" style="background:var(--green-light)">🌱</div>
+        <div class="benefit-visual-card" style="background:var(--pink-light)">🏆</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- For Parents -->
+<section class="parents" id="parents">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--white);color:var(--green)">For Parents</span>
+      <h2 class="section-title">Built With Parents in Mind</h2>
+      <p class="section-subtitle" style="margin-inline:auto">We partner with you to support your child's development at home.</p>
+    </div>
+    <div class="parents-grid">
+      <div class="parent-card reveal">
+        <div class="parent-card-icon">🔒</div>
+        <h3>Completely Safe</h3>
+        <p>No ads, no external links, no comments section. Just pure, safe educational content your child can enjoy independently.</p>
+      </div>
+      <div class="parent-card reveal reveal-delay-1">
+        <div class="parent-card-icon">📏</div>
+        <h3>Age-Appropriate</h3>
+        <p>Content carefully designed for ages 2 to 8, with clear age labels so you always know what's right for your child.</p>
+      </div>
+      <div class="parent-card reveal reveal-delay-2">
+        <div class="parent-card-icon">🎯</div>
+        <h3>Curriculum-Aligned</h3>
+        <p>Videos support early learning goals: literacy, numeracy, social skills, and STEM foundations at every level.</p>
+      </div>
+      <div class="parent-card reveal reveal-delay-3">
+        <div class="parent-card-icon">🏠</div>
+        <h3>Home Learning Support</h3>
+        <p>Printable worksheets, discussion guides, and activity suggestions extend learning beyond screen time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--yellow-light);color:oklch(50% 0.12 85)">Reviews</span>
+      <h2 class="section-title">What Parents Are Saying</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p class="testimonial-text">"My 4-year-old learned the entire alphabet in two weeks just from watching these videos. The songs are so catchy that the whole family sings along!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:var(--sky-light)">👩</div>
+          <div>
+            <div class="testimonial-name">Sarah M.</div>
+            <div class="testimonial-role">Mom of two</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p class="testimonial-text">"Finally, a channel I can trust to leave on without worrying. The content is genuinely educational and my son asks to 'do school' every morning."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:var(--green-light)">👨</div>
+          <div>
+            <div class="testimonial-name">James K.</div>
+            <div class="testimonial-role">Dad, preschool teacher</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p class="testimonial-text">"The counting videos helped my daughter overcome her fear of numbers. She now counts everything she sees! The animations are beautiful and age-perfect."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:var(--pink-light)">👩</div>
+          <div>
+            <div class="testimonial-name">Amira H.</div>
+            <div class="testimonial-role">Mom of three</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--white);color:oklch(55% 0.12 350)">FAQ</span>
+      <h2 class="section-title">Common Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-question">
+          What age group is this channel for?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Our content is designed primarily for children ages 2 to 8. We label each video with a recommended age range so parents can easily find the right content for their child's developmental stage.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-question">
+          How often do you upload new videos?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">We publish 3 new videos every week: Monday, Wednesday, and Friday. Subscribe and hit the bell icon so you never miss a new learning adventure!</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-question">
+          Is the content aligned with educational standards?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes! Our team includes certified early childhood educators who ensure every video supports key learning milestones in literacy, numeracy, social-emotional development, and STEM exploration.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-3">
+        <button class="faq-question">
+          Is the channel safe for unsupervised viewing?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Absolutely. We produce all content in-house with strict quality guidelines. There are no external links, no user comments enabled, and no third-party ads. Your child's safety is our top priority.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-4">
+        <button class="faq-question">
+          Can I use these videos for homeschooling?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Definitely! Many homeschooling families use our videos as part of their daily routine. We also provide free downloadable activity sheets and lesson guides that complement the video content.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-box reveal">
+      <h2>Join Our Learning Family! 🎉</h2>
+      <p>Get weekly learning tips, new video alerts, and free printable activities delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=color:white;font-weight:700;padding:16px>🎉 You\'re in! Check your inbox for a welcome surprise.</p>'">
+        <input type="email" class="newsletter-input" placeholder="Your email address" required>
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="section-label" style="background:var(--sky-light);color:var(--sky-dark)">Say Hi</span>
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="section-subtitle" style="margin-inline:auto">Questions, feedback, or partnership ideas? We'd love to hear from you.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Let's Connect! 🌟</h3>
+        <p>Whether you're a parent with a suggestion, a teacher looking to collaborate, or a brand interested in working together, our team reads every message and responds within 48 hours.</p>
+        <div class="contact-social">
+          <a href="https://www.youtube.com/@Bright_buddies-e6k" class="social-link" style="background:var(--coral-light)" title="YouTube">▶</a>
+          <a href="#" class="social-link" style="background:var(--sky-light)" title="Twitter">𝕏</a>
+          <a href="#" class="social-link" style="background:var(--pink-light)" title="Instagram">📷</a>
+          <a href="#" class="social-link" style="background:var(--green-light)" title="Facebook">f</a>
+          <a href="#" class="social-link" style="background:var(--yellow-light)" title="TikTok">♪</a>
+        </div>
+      </div>
+      <form class="contact-form reveal reveal-delay-1" onsubmit="event.preventDefault(); this.innerHTML='<p style=text-align:center;padding:40px;font-size:1.2rem>🎉 Message sent! We\'ll get back to you soon.</p>'">
+        <input type="text" class="form-input" placeholder="Your name" required>
+        <input type="email" class="form-input" placeholder="Email address" required>
+        <textarea class="form-textarea" placeholder="Your message..." required></textarea>
+        <button type="submit" class="form-btn">Send Message ✉️</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-logo">📚 Bright Buddies</div>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#categories">Learn</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#parents">Parents</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <p class="footer-bottom">© 2026 Bright Buddies. Made with ❤️ for curious little minds everywhere.</p>
+  </div>
+</footer>
+
+<div class="rainbow-line"></div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+const mobileToggle = document.getElementById('mobileToggle');
+const navLinks = document.getElementById('navLinks');
+mobileToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
